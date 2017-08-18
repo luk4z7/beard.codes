@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Beard.codes</title>
+    <link>http://beard.codes/tags/</link>
+    <description>Recent content in Tags on Beard.codes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>luk4z_7@hotmail.com (Lucas Alves)</managingEditor>
+    <webMaster>luk4z_7@hotmail.com (Lucas Alves)</webMaster>
+    <lastBuildDate>Wed, 18 Nov 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://beard.codes/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Php</title>
+      <link>http://beard.codes/tags/php/</link>
+      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
+      <author>luk4z_7@hotmail.com (Lucas Alves)</author>
+      <guid>http://beard.codes/tags/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zf2</title>
+      <link>http://beard.codes/tags/zf2/</link>
+      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
+      <author>luk4z_7@hotmail.com (Lucas Alves)</author>
+      <guid>http://beard.codes/tags/zf2/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

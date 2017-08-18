@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Php on Beard.codes</title>
+    <link>http://beard.codes/tags/php/</link>
+    <description>Recent content in Php on Beard.codes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>luk4z_7@hotmail.com (Lucas Alves)</managingEditor>
+    <webMaster>luk4z_7@hotmail.com (Lucas Alves)</webMaster>
+    <lastBuildDate>Wed, 18 Nov 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://beard.codes/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ServiceManager</title>
+      <link>http://beard.codes/post/2015-11-18-zf2-servicemanager/</link>
+      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
+      <author>luk4z_7@hotmail.com (Lucas Alves)</author>
+      <guid>http://beard.codes/post/2015-11-18-zf2-servicemanager/</guid>
+      <description>&lt;p&gt;Agora vamos falar um pouco sobre &lt;code&gt;ServiceManager&lt;/code&gt; peça fundamental para que possamos ter bom entendimento do ZF2.
+O &lt;code&gt;Service Manager&lt;/code&gt; em Zend Framework 2 é usado para encontrar e instanciar serviços (classes)
+incluindo cumprindo com quaisquer dependências que um serviço possa exigir.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>EventManager</title>
+      <link>http://beard.codes/post/2015-11-06-zf2-eventmanager/</link>
+      <pubDate>Fri, 06 Nov 2015 00:00:00 +0000</pubDate>
+      <author>luk4z_7@hotmail.com (Lucas Alves)</author>
+      <guid>http://beard.codes/post/2015-11-06-zf2-eventmanager/</guid>
+      <description>&lt;p&gt;O &lt;code&gt;EventManager&lt;/code&gt; é um componente usado para implementar o padrão &lt;code&gt;observer&lt;/code&gt; &lt;code&gt;( aspect-oriented design )&lt;/code&gt; e programação orientada a eventos em aplicações &lt;code&gt;Zend Framework 2&lt;/code&gt;.
+Um &lt;code&gt;EventManager&lt;/code&gt; pode ser criado por simplesmente instanciar um novo objeto, exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;$eventManager = new EventManager();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

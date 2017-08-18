@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>ServiceManager</title>
+  <meta property="og:title" content="ServiceManager" />
+  <meta name="twitter:title" content="ServiceManager" />
+  <meta name="description" content="Ou mais conhecido como gerenciador de serviços">
+  <meta property="og:description" content="Ou mais conhecido como gerenciador de serviços">
+  <meta name="twitter:description" content="Ou mais conhecido como gerenciador de serviços">
+  <meta name="author" content="Lucas Alves"/>
+  <link href='http://beard.codes/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="http://beard.codes/img/avatar-icon.png" />
+  <meta name="twitter:image" content="http://beard.codes/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@luk4z_7" />
+  <meta name="twitter:creator" content="@luk4z_7" />
+  <meta property="og:url" content="http://beard.codes/post/2015-11-18-zf2-servicemanager/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Beard.codes" />
+
+  <meta name="generator" content="Hugo 0.25.1" />
+  <link rel="canonical" href="http://beard.codes/post/2015-11-18-zf2-servicemanager/" />
+  <link rel="alternate" href="http://beard.codes/index.xml" type="application/rss+xml" title="Beard.codes">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://beard.codes/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://beard.codes/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="http://beard.codes/css/highlight.min.css" />
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://beard.codes/">Beard.codes</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Beard.codes" href="http://beard.codes/">
+            <img class="avatar-img" src="http://beard.codes/img/avatar-icon.png" alt="Beard.codes" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              <h1>ServiceManager</h1>
+                
+                  
+                    <h2 class="post-subheading">Ou mais conhecido como gerenciador de serviços</h2>
+                  
+                
+                
+                  <span class="post-meta">
+  Posted on November 18, 18117
+  
+</span>
+
+
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>Agora vamos falar um pouco sobre <code>ServiceManager</code> peça fundamental para que possamos ter bom entendimento do ZF2.
+O <code>Service Manager</code> em Zend Framework 2 é usado para encontrar e instanciar serviços (classes)
+incluindo cumprindo com quaisquer dependências que um serviço possa exigir.</p>
+
+<p></p>
+
+<p>Zend Framework 2 usa <code>Service Manager</code> em toda a estrutura do framework,
+com <code>Service managers</code> especializados usados para encontrar tipos específicos de serviços,
+incluindo:</p>
+
+<ul>
+<li>Controllers</li>
+<li>Plugins</li>
+<li>View Helpers</li>
+<li>Input Filters</li>
+<li>Filters</li>
+<li>Validators</li>
+<li>Form Elements</li>
+<li>Hydrators</li>
+<li>Application Services ( Criado pelos usuários )</li>
+</ul>
+
+<p><br/><br/></p>
+
+<h4 id="service-locator">Service Locator</h4>
+
+<p>O padrão de projeto <code>Service Locator</code> descreve um método de obtenção de um serviço através de uma camada de abstração.
+<code>Service Manager</code> em Zend Framework 2 implementa a interface <code>ServiceLocatorInterface</code>.
+A interface prescreve dois métodos, <code>has()</code> para determinar se um determinado serviço tenha sido registrado com o <code>Service Manager</code>,
+e <code>get()</code> para retornar uma instância desse serviço.</p>
+
+<pre><code class="language-php">namespace Zend\ServiceManager;
+
+interface ServiceLocatorInterface
+{
+    public function get($name);
+
+    public function has($name);
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Quando é pedido para retornar um serviço,  a classe <code>Zend\ServiceManager\ServiceManager</code> vai criar instâncias de
+objetos gradativamente do serviço solicitado, usando tipicamente <code>service factories</code> para criar os serviços
+e satisfazer as suas dependências.
+Os serviços devem ser criados com dependências definidas no construtor ( ou com setters ).
+sempre que possível, a injeção de dependência deve ser usada para satisfazer dependências nos serviços criados pelo <code>ServiceManager</code>.</p>
+
+<p><br/></p>
+
+<h4 id="plugin-managers">Plugin Managers</h4>
+
+<p>Existem várias implementações do <code>ServiceLocatorInterface</code> que têm a tarefa de localizar diferentes serviços e plugins.</p>
+
+<p><br/></p>
+
+<h4 id="abstract-plugin-manager">Abstract Plugin Manager</h4>
+
+<p>O <code>AbstractPluginManager</code> é uma implementação de <code>Service Manager</code> para gerenciamento de plugins.
+A classe abstrata fornece métodos para definir e obter plugins, juntamente com a criação de serviços das classes <code>invokable</code>, <code>factories</code> e objetos que pode ser chamados, como as <code>closures</code>.</p>
+
+<p><br/></p>
+
+<h4 id="controller-manager">Controller Manager</h4>
+
+<p>O <code>Zend\Mvc\Controller\ControllerManager</code> estende de <code>AbstractPluginManager</code>, e é um gerenciador de plugin que é responsável pela recuperação e criação de classes do controlador.
+Ele é usado internamente pelo roteador <code>MVC</code> para localizar e recuperar os controladores com base na chave fornecida pela rota.
+É muito importante que os controladores estejam em um gerenciador de plug-in separado por razões de velocidade e segurança.</p>
+
+<p><br/></p>
+
+<h4 id="other-plugin-managers">Other Plugin Managers</h4>
+
+<p>Há também um número de <code>Plugin Managers</code> que têm a tarefa de criação e recuperação de tipos específicos de serviços e plugins.
+Cada um destes <code>Plugins Managers</code> estende a <code>AbstractPluginManager</code>:</p>
+
+<ul>
+<li>ControllerPluginManager       -   Criação e recuperação de controller plugin</li>
+<li>ViewHelperPluginManager       -   Criação e recuperação de view helpers</li>
+<li>InputFilterPluginManager      -   Criação e recuperação de input filters</li>
+<li>FilterPluginManager           -   Criação e recuperação de filters</li>
+<li>ValidatorPluginManager        -   Criação e recuperação de validators</li>
+<li>FormElementManager            -   Criação e recuperação de form elements</li>
+<li>HydratorPluginManager         -   Criação e recuperação de Hydrators</li>
+<li>RoutePluginManager            -   Criação e recuperação de rotas</li>
+<li>SerializerAdapterManager      -   Usado para gerenciar instâncias de Serializer</li>
+</ul>
+
+<p><br/></p>
+
+<p>Vamos alterar um pouco a estrutura de nosso projeto e adicionar alguns arquivos para
+exemplificar o uso de <code>AbstractPluginManager</code>, <code>AbstractPluginManagerFactory</code>, vamos
+criar alguns plugins customizados.</p>
+
+<h5 id="estrutura-do-projeto">Estrutura do projeto:</h5>
+
+<ul>
+<li>zf2-componentization
+
+<ul>
+<li>src
+
+<ul>
+<li>Components
+
+<ul>
+<li>EventManager
+
+<ul>
+<li>CreditCard.php</li>
+<li>ListenerAggregate.php</li>
+</ul></li>
+<li>ServiceManager
+
+<ul>
+<li>Delegator
+
+<ul>
+<li>CreditCardDelegator.php</li>
+<li>CreditCardDelegatorLazy.php</li>
+</ul></li>
+<li>Factories
+
+<ul>
+<li>AbstractCreditCardFactory.php</li>
+<li>CreditCardDelegatorFactory.php</li>
+<li>CreditCardParametersFactory.php</li>
+</ul></li>
+<li>PluginManager
+
+<ul>
+<li>Plugins
+
+<ul>
+<li>Boleto1.php</li>
+<li>Boleto2.php</li>
+</ul></li>
+<li>Service
+
+<ul>
+<li>PluginFactory.php</li>
+</ul></li>
+<li>Plugin.php</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>vendor</li>
+<li>index.php</li>
+<li>composer.json</li>
+</ul></li>
+</ul>
+
+<p><br/></p>
+
+<p>Primeiro passo vamos criar um arquivo com nome <code>Plugin.php</code>, em seguida uma classe chamada de <code>Plugin</code>
+onde essa classe estende de <code>AbstractPluginManager</code> que por sua vez estende de
+<code>ServiceManager</code> e implementa <code>ServiceLocatorAwareInterface</code>, <code>AbstractPluginManager</code>
+possui um método abstrato chamado de <code>validatePlugin()</code> onde será necessário implementar.</p>
+
+<p><code>Plugin.php</code></p>
+
+<pre><code class="language-PHP">namespace Components\ServiceManager\PluginManager;
+
+use Zend\ServiceManager\AbstractPluginManager;
+
+/**
+ * Class Plugin
+ * @package Components\ServiceManager\PluginManager
+ */
+class Plugin extends AbstractPluginManager
+{
+    /**
+     * @param mixed $plugin
+     */
+    public function validatePlugin($plugin)
+    {
+        // TODO
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Criamos agora nossa <code>factory</code>, um arquivo chamado de <code>PluginFactory.php</code> com uma classe chamada de
+<code>PluginFactory</code> que será registrada mais tarde no <code>service_manager</code> nas <code>factories</code>, cumprindo seu papel de uma &ldquo;fabrica&rdquo;,
+ficando muito facil depois criar uma classe como um plugin, pois como ela herda de <code>ServiceManager</code> somente passamos
+os serviços que queremos registrar via <code>setInvokableClass()</code>.</p>
+
+<p>A constante <code>PLUGIN_MANAGER_CLASS</code> recebe a classe de plugin que será criado um serviço.</p>
+
+<p>Em nosso exemplo sobrescrevemos o método <code>createService()</code> para evitar erros com serviços não registrados, como
+em nosso exemplo não carregamos todo o framework e que são usados no método da classe <code>AbstractPluginManagerFactory</code>
+como <code>Config</code>, <code>DiAbstractServiceFactory</code> e <code>Di</code>,</p>
+
+<p><code>PluginFactory.php</code></p>
+
+<pre><code class="language-php">namespace Components\ServiceManager\PluginManager\Service;
+
+use Zend\Mvc\Service\AbstractPluginManagerFactory;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+/**
+ * Class PluginManager
+ * @package Components\ServiceManager\PluginManager
+ */
+class PluginFactory extends AbstractPluginManagerFactory
+{
+    /**
+     * Constante que recebe o namespace da classe a ser instânciada
+     */
+    const PLUGIN_MANAGER_CLASS = 'Components\ServiceManager\PluginManager\Plugin';
+
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return \Zend\ServiceManager\AbstractPluginManager
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $pluginManagerClass = self::PLUGIN_MANAGER_CLASS;
+
+        /**
+         * @var $plugins \Zend\ServiceManager\AbstractPluginManager
+         */
+        $plugins = new $pluginManagerClass;
+        $plugins-&gt;setServiceLocator($serviceLocator);
+
+        return $plugins;
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Criamos dois plugins, dois arquivos chamados de <code>Boleto1.php</code> e <code>Boleto2.php</code> com as
+classes <code>Boleto1</code> e <code>Boleto2</code> somente com um construtor para simplificar o exemplo.</p>
+
+<p><code>Boleto1.php</code></p>
+
+<pre><code class="language-PHP">namespace Components\ServiceManager\PluginManager\Plugins;
+
+/**
+ * Class Boleto1
+ * @package Components\ServiceManager\PluginManager\Plugins
+ */
+class Boleto1
+{
+    /**
+     * Boleto1 constructor.
+     */
+    public function __construct()
+    {
+        echo &quot;BOLETO 1&quot;;
+    }
+}
+</code></pre>
+
+<p><code>Boleto2.php</code></p>
+
+<pre><code class="language-PHP">namespace Components\ServiceManager\PluginManager\Plugins;
+
+/**
+ * Class Boleto2
+ * @package Components\ServiceManager\PluginManager\Plugins
+ */
+class Boleto2
+{
+    /**
+     * Boleto2 constructor.
+     */
+    public function __construct()
+    {
+        echo &quot; | BOLETO 2 | &quot;;
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Na <code>index.php</code> vamos instanciar <code>ServiceManager</code></p>
+
+<pre><code class="language-PHP">$serviceManager = new Zend\ServiceManager\ServiceManager();
+</code></pre>
+
+<p><br/></p>
+
+<p>Criar um array com nossa <code>factory</code> em seguida instanciar <code>ServiceManagerConfig</code>
+e passar nosso array com as <code>factories</code> ou <code>invokables</code>.</p>
+
+<pre><code class="language-PHP">$config = [
+    'factories' =&gt; [
+        'Plugin' =&gt; 'Components\ServiceManager\PluginManager\Service\PluginFactory'
+    ]
+];
+
+$serviceConfig = new \Zend\Mvc\Service\ServiceManagerConfig($config);
+$serviceConfig-&gt;configureServiceManager($serviceManager);
+</code></pre>
+
+<p><br/></p>
+
+<p>Depois que o serviço <code>Plugin</code> já está registrado somente usar o método <code>get()</code> para resgatar
+a instância do serviço, configuramos mais dois serviços que são nossos plugins <code>Boleto1</code> e <code>Boleto2</code>,
+depois novamente somente chamar os serviços dentro da aplicação.</p>
+
+<pre><code class="language-PHP">$plugin = $serviceManager-&gt;get('Plugin');
+$plugin-&gt;setInvokableClass('Boleto1', 'Components\ServiceManager\PluginManager\Plugins\Boleto1');
+$plugin-&gt;setInvokableClass('Boleto2', 'Components\ServiceManager\PluginManager\Plugins\Boleto2');
+
+$boleto = $plugin-&gt;get('Boleto1');
+$boleto = $plugin-&gt;get('Boleto2');
+</code></pre>
+
+<p>Retorno:</p>
+
+<pre><code>BOLETO 1 | BOLETO 2 |
+</code></pre>
+
+<p>Lembrando que vamos analisar alguns termos visto nesse exemplo e como usá los, destacamos algumas como:
+<code>invokables</code>, <code>factories</code>, <code>Config</code>, <code>ServiceConfig</code> etc &hellip;</p>
+
+<p><br/>
+<br/></p>
+
+<h4 id="invokables">Invokables</h4>
+
+<p>A maneira mais simples de criar serviços através de um <code>service manager</code> é usando um <code>invokable</code>.</p>
+
+<p>Um <code>invokable</code> é simplesmente uma classe que pode ser instanciada sem dependências
+( ou com dependências que são cumpridas por um <code>initializer</code>).</p>
+
+<p><code>invokables</code> podem ser definidos usando a key &ldquo;invokables&rdquo; no array de configuração passado para o objeto <code>Config</code></p>
+
+<p>ex1:</p>
+
+<pre><code class="language-PHP">'controllers' =&gt; array(
+    'invokables' =&gt; array(
+        'Application\Controller\Index' =&gt; 'Application\Controller\IndexController'
+    ),
+),
+</code></pre>
+
+<p>ex2:</p>
+
+<pre><code class="language-php">$config = new Config( [
+     ‘invokables’ =&gt; [
+         ‘hydrator’ =&gt; ‘Zend\Stdlib\Hydrator\ClassMethods'
+     ],
+] );
+$serviceManager = new ServiceManager( $config );
+</code></pre>
+
+<p><br/></p>
+
+<h5 id="setservices">setServices</h5>
+
+<p>Em nosso arquivo <code>index.php</code> vamos registrar um serviço usando o <code>setService</code>, no final do arquivo
+vamos instanciar <code>ServiceManager</code>, registramos o serviço com <code>setService</code> instanciando a classe <code>CreditCard</code>,
+depois chamamos o serviço com o método <code>get</code>, pode ser visto a estrutura da classe no retorno do <code>print_r</code>, no
+segundo exemplo chamamos duas vezes o mesmo serviço atribuindo para váriaveis de nomes diferentes e fazemos uma comparação,
+as váriaveis são idênticas pelo motivo que por default <code>ServiceManager</code> cria as instâncias compartilhadas.</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-PHP">// Registrando serviços com setService
+$serviceManager2 = new \Zend\ServiceManager\ServiceManager();
+$serviceManager2-&gt;setService('CreditCardWithSetService', new Components\EventManager\CreditCard());
+$servicoCreditCard = $serviceManager2-&gt;get('CreditCardWithSetService');
+$servicoCreditCard2 = $serviceManager2-&gt;get('CreditCardWithSetService');
+print_r( $servicoCreditCard );
+var_dump( $servicoCreditCard === $servicoCreditCard2);
+</code></pre>
+
+<p>Retorno:</p>
+
+<pre><code>Components\EventManager\CreditCard Object ( [event:protected] =&gt; ) bool(true)
+</code></pre>
+
+<p><br/></p>
+
+<h5 id="setinvokableclass">setInvokableClass</h5>
+
+<p>No exemplo acima aprendemos como criar serviços e chamá-los usando <code>setService</code> e <code>get</code>,
+o grande problema do <code>setService</code> vem a ser o acoplamento que é criando quando
+instânciamos o objeto passado como parâmetro, para isso existe uma outra maneira de registrar um serviço
+com o <code>setInvokableClass</code>, quando o serviço somente é &ldquo;invocado&rdquo; pelo nome da classe</p>
+
+<pre><code class="language-PHP">$serviceManager2-&gt;setInvokableClass('CreditCardWithInvokableClass', '\Components\EventManager\CreditCard');
+$serviceCreditCardWithInvokableClass = $serviceManager2-&gt;get('CreditCardWithInvokableClass');
+print_r($serviceCreditCardWithInvokableClass);
+</code></pre>
+
+<p><br/></p>
+
+<p>Da mesma maneira que foi feito com <code>setService</code> chamando dois serviços e os comparando, com o
+<code>setInvokableClass</code> também obterá o mesmo resultado, para que possamos alterar isso quando necessitamos
+de uma nova instância passamos o terceiro parâmetro para <code>setInvokableClass</code> como <code>false</code>, ficando
+da seguinte maneiro nosso código:</p>
+
+<pre><code class="language-PHP">$serviceManager2-&gt;setInvokableClass('CreditCardWithInvokableClass', '\Components\EventManager\CreditCard', false);
+$serviceCreditCardWithInvokableClass = $serviceManager2-&gt;get('CreditCardWithInvokableClass');
+$serviceCreditCardWithInvokableClass2 = $serviceManager2-&gt;get('CreditCardWithInvokableClass');
+print_r($serviceCreditCardWithInvokableClass);
+var_dump( $serviceCreditCardWithInvokableClass === $serviceCreditCardWithInvokableClass2);
+</code></pre>
+
+<p>Retorno:</p>
+
+<pre><code>Components\EventManager\CreditCard Object ( [event:protected] =&gt; ) bool(false)
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="factories">Factories</h4>
+
+<p><code>Factories</code> são classes ou funções que podem ser chamadas e retornam uma instância configurada do serviço solicitado.
+O tipo <code>callables</code> deve retornar do serviço configurado, enquanto as classes devem implementar a interface <code>FactoryInterface</code>, e deve retornar o serviço configurado a partir do método prescrito <code>createService()</code>.</p>
+
+<p>Ambos <code>callables</code> e classes podem obter a instância de <code>service manager</code> que os chamou passado como um parâmetro para o método chamado.
+Isso permite que a <code>factory</code> possa cumprir quaisquer dependências do serviço, recuperando essas dependências pelo chamado do <code>service manager</code>, ou o <code>shared service manager</code> (através do método <code>getServiceLocator()</code> ).</p>
+
+<p>As <code>factories</code> estão definidas na <code>key</code> : <code>factories</code> do array de configuração</p>
+
+<p>ex1</p>
+
+<pre><code class="language-PHP">public function getServiceConfig()
+{
+   return [
+      'factories' =&gt; [
+         'Base\Service\ProcessJson' =&gt; function($sm) {
+            $serializer = $sm-&gt;get('jms_serializer.serializer');
+            return new Service\ProcessJson(null, null, $serializer);
+         },
+      ]
+   ];
+}
+</code></pre>
+
+<p>ex2</p>
+
+<pre><code class="language-PHP">$config = new Config([
+     'factories' =&gt; [
+          'UserService' =&gt; 'User\Factory\UserServiceFactory',
+          // class implements the FactoryInterface
+
+          'user' =&gt; function ( ServiceLocatorInterface $serviceManager ) {
+               $service = $serviceManager-&gt;get('UserService');
+               // defined above
+               $user = new User($service); // constructor dependency injection
+               return $user;
+          }
+     ],
+]);
+$serviceManager = new ServiceManager( $config );
+</code></pre>
+
+<p><br/></p>
+
+<p>Vamos criar uma <code>factory</code> diretamente no arquivo <code>index.php</code>, usamos o método <code>setFactory</code> passando
+o nome do serviço e logo em seguida uma classe ou um <code>callback</code>, vamos usar em nosso exemplo um <code>callback</code>,
+dentro retornamos o serviço recem criado <code>CreditCardWithInvokableClass</code> a partir da instância de <code>ServiceManager</code>
+que obtemos na variável <code>$sm</code>, muito útil para criarmos <code>containers</code> para resolver dependências, poderiamos criar um serviço
+que automaticamente quando fosse chamado já resolveria alguma dependências para evitar a duplicação de código</p>
+
+<pre><code class="language-PHP">$serviceManager2-&gt;setFactory('CreditCardFactory', function($sm) {
+    return $sm-&gt;get('CreditCardWithInvokableClass');
+});
+$creditCardFactory = $serviceManager2-&gt;get('CreditCardFactory');
+var_dump($creditCardFactory);
+</code></pre>
+
+<p>Retorno:</p>
+
+<pre><code>object(Components\EventManager\CreditCard)#41 (1) { [&quot;event&quot;:protected]=&gt; NULL }
+</code></pre>
+
+<p><br/></p>
+
+<p>Continuando vamos dar outro exemplo de como trabalhar com <code>factories</code>, criaremos uma classe para armazenar nossa <code>factory</code>,
+implementando <code>FactoryInterface</code>, o nome do arquivo será <code>CreditCardParametersFactory.php</code> dentro de <code>ServiceManager/Factories/</code>,
+implemente o método <code>createService</code> que como o nome diz cria um serviço e nos retorna um <code>ServiceLocator</code> interface que possui o
+método <code>get</code> que usamos muito, vamos criar outro método na classe <code>CreditCard</code> para depois terminar de implementar o método <code>createService</code></p>
+
+<p><code>CreditCardParametersFactory.php</code></p>
+
+<pre><code class="language-PHP">namespace Components\ServiceManager\Factories;
+
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+class CreditCardParametersFactory implements FactoryInterface
+{
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return mixed
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Agora no arquivo <code>CreditCard.php</code> vamos criar o seguinte método no final da classe,
+onde ele vai receber um array de parâmetros e somente exportar a informação.</p>
+
+<p><code>CreditCard.php</code></p>
+
+<pre><code class="language-PHP">/**
+ * @param array $array
+ * @return mixed
+ */
+public function exportParameters($array = array())
+{
+    return var_export($array);
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Voltando para a classe <code>CreditCardParametersFactory</code> vamos finalizar o método <code>createService</code>,
+como temos o <code>ServiceLocator</code> vamos resgatar o último serviço que criamos na <code>index.php</code>, <code>CreditCardWithInvokableClass</code>
+e passamos um array com vários parâmetros para o método <code>exportParameters</code> que acabamos de criar na classe <code>CreditCard</code>
+ficando da seguinte maneira:</p>
+
+<p><code>CreditCardParametersFactory.php</code></p>
+
+<pre><code class="language-PHP">namespace Components\ServiceManager\Factories;
+
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+class CreditCardParametersFactory implements FactoryInterface
+{
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return mixed
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $card = $serviceLocator-&gt;get('CreditCardWithInvokableClass');
+        $card-&gt;exportParameters(array(
+            'firstName' =&gt; 'Bobby',
+            'lastName' =&gt; 'Tables',
+            'number' =&gt; '4444333322221111',
+            'cvv' =&gt; '123',
+            'expiryMonth' =&gt; '12',
+            'expiryYear' =&gt; '2017',
+            'email' =&gt; 'testcard@gmail.com'
+        ));
+        return $card;
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Na <code>index.php</code> Criamos outro serviço chamado de <code>CreditCardAbstractFactory</code> e ao invés de
+passamos um <code>callback</code>, vamos passar a nossa <code>factory</code> e depois somente chamar o serviço:</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-PHP">$serviceManager2-&gt;setFactory('CreditCardAbstractFactory', 'Components\ServiceManager\Factories\CreditCardParametersFactory');
+$serviceManager2-&gt;get('CreditCardAbstractFactory');
+</code></pre>
+
+<p>Retorno:</p>
+
+<pre><code>    array ( 'firstName' =&gt; 'Bobby', 'lastName' =&gt; 'Tables', 'number' =&gt; '4444333322221111', 'cvv' =&gt; '123', 'expiryMonth' =&gt; '12', 'expiryYear' =&gt; '2017', 'email' =&gt; 'testcard@gmail.com', )
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="abstract-factories">Abstract Factories</h4>
+
+<p><code>Abstract Factories</code> são <code>factories</code> que são capazes de múltiplos serviços.
+<code>Abstract Factories</code> implementam o <code>AbstractFactoryInterface</code> e são consultados depois de <code>factories</code> e <code>invokables</code>,
+se não houver nenhuma entrada para este serviço como uma <code>factory</code> ou <code>invokable</code>, <code>Abstract Factories</code> são registradas
+perguntado se elas podem criar este serviço através do método <code>canCreateServiceWithName()</code>, se este método retorna <code>true</code>,
+em seguida, o serviço é solicitado através do método <code>createServiceWithName()</code>.</p>
+
+<p>Como o padrão de <code>factory</code>, o <code>service manager</code> que está sendo utilizado para solicitar este serviço é passado como um parâmetro para que as dependências do serviço possam ser cumpridas.
+<code>Abstract Factories</code> são registradas usando a chave <code>abstract_factories</code> no array de configuração.</p>
+
+<pre><code class="language-PHP">class AbstractTableGatewayFactory implements AbstractFactoryInterface {
+     public function createServiceWithName( ServiceLocatorInterface $serviceLocator, $name, $requestedName ) {
+          // does this classname end with Table?
+          return fnmatch ( '*Table', $requestedName );
+     }
+
+     public function canCreateServiceWithName ( ServiceLocatorInterface $serviceLocator, $name, $requestedName ) {
+          $adapter = $serviceLocator-&gt;get('Zend\Db\Adapter\Adapter');
+          return new TableGateway ( str_replace ( 'Table', '', $requestedName ), $adapter );
+     }
+}
+
+$config = new Config ( [
+     'abstract_factories' =&gt; [
+         'AbstractTableGatewayFactory'
+     ],
+] );
+$serviceManager = new ServiceManager ( $config );
+$userTable = $serviceManager-&gt;get('userTable');
+</code></pre>
+
+<p><br/></p>
+
+<p>Criaremos nossa classe para servir como uma <code>abstract factory</code>, nome do arquivo: <code>AbstractCreditCardFactory.php</code> no diretório:
+<code>Components/ServiceManager/Factories/</code> e nome de classe: <code>AbstractCreditCardFactory</code>, implemeta <code>AbstractFactoryInterface</code> e
+criamos os métodos que precisamos implementar <code>canCreateServiceWithName</code> que quando retorna <code>true</code> é criado o serviço com o
+método <code>createServiceWithName</code>, em nosso exemplo somente verificamos se é suportado a bandeira que é passada junto com o
+serviço concatenado, vamos analisar isso no <code>index.php</code></p>
+
+<p><code>AbstractCreditCardFactory.php</code></p>
+
+<pre><code class="language-PHP">namespace Components\ServiceManager\Factories;
+
+use Components\EventManager\CreditCard;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\AbstractFactoryInterface;
+
+class AbstractCreditCardFactory implements AbstractFactoryInterface
+{
+    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        $brand = explode('-', $requestedName);
+        $reflaction = new \ReflectionClass('\Components\EventManager\CreditCard');
+
+        if ( array_key_exists($brand[1], $reflaction-&gt;getConstants()) )
+            return true;
+    }
+
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param $name
+     * @param $requestedName
+     * @return CreditCard
+     */
+    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        return new CreditCard();
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Como não estamos trabalhando ainda aqui nos exemplos com o <code>ServiceConfig</code> vamos usar o método <code>addAbstractFactory</code> para adicionar
+a <code>abstract factory</code>, quando for chamado o serviço via <code>get</code> será identificado que não existe serviço criado com o nome passado, em seguida
+é consultado a existência de uma <code>abstract factory</code>, como temos uma registrada é criado um serviço, retornando assim uma instância de <code>CreditCard</code>
+onde já temos acesso a seus métodos.</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-php">$serviceManager2-&gt;addAbstractFactory('Components\ServiceManager\Factories\AbstractCreditCardFactory');
+$abstractCreditCardFactory = $serviceManager2-&gt;get('BrandSupported-BRAND_VISA');
+$abstractCreditCardFactory-&gt;getCreditCardFlag(4444333322221111);
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="aliases">Aliases</h4>
+
+<p><code>Aliases</code> podem ser usados para indicar um determinado nome de serviço para outro serviço que já tenha sido definido por um outro método.
+<code>Aliases</code> podem ser registrados usando a <code>key</code> <code>aliases</code> do array de configuração.</p>
+
+<p>ex</p>
+
+<pre><code class="language-PHP">$config = new Config ( [
+     'aliases' =&gt; [
+          'user' =&gt; 'UserService'
+     ];
+] );
+$serviceManager = new ServiceManager( $config );
+</code></pre>
+
+<p><br/></p>
+
+<p>Poderiamos trabalhar também com o método <code>setAlias</code> o retorno seria o mesmo de chamar o serviço como ele foi estabelecido.</p>
+
+<pre><code class="language-PHP">$serviceManager2-&gt;setFactory('CreditCardAbstractFactory2', 'Components\ServiceManager\Factories\CreditCardParametersFactory');
+$serviceManager2-&gt;setAlias('FactoryWithAlias', 'CreditCardAbstractFactory2');
+$serviceManager2-&gt;get('FactoryWithAlias');
+</code></pre>
+
+<p>Retorno:</p>
+
+<pre><code>array ( 'firstName' =&gt; 'Bobby', 'lastName' =&gt; 'Tables', 'number' =&gt; '4444333322221111', 'cvv' =&gt; '123', 'expiryMonth' =&gt; '12', 'expiryYear' =&gt; '2017', 'email' =&gt; 'testcard@gmail.com', )
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="shared-service-manager">Shared Service Manager</h4>
+
+<p><code>Zend\ServiceManager\ServiceManager</code> é uma implementação do <code>ServiceLocatorInterface</code> usado para armazenar os serviços personalizados, bem como internamente para armazenar serviços utilizados através do framework, é tipicamente escrito pelo desenvolvedor do software.</p>
+
+<p>O <code>Shared Service Manager</code> está disponível a partir de qualquer um dos <code>Plugins Managers</code> especializados através do método <code>getServiceLocator()</code> do <code>AbstractPluginManager</code>.</p>
+
+<p>No exemplo que trabalhamos chamando dois serviços iguais e comparando-os para checar seu valor e tipo sempre era retornado <code>true</code> a não ser
+quando passamos o terceiro parâmetro para o <code>setInvokableClass</code> que seria o valor boolean <code>false</code>, por padrão esse valor é <code>true</code>, ou seja todos
+os serviços são compartilhados, podemos usar também o método <code>setShared</code> passando o serviço e o valor boolean <code>false</code>, e a cada chamada para um serviço ele retornará uma nova instância.</p>
+
+<pre><code class="language-PHP">$serviceManager-&gt;setShared('Servico', false);
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="peering-services">Peering Services</h4>
+
+<p><code>Peering Services</code> é um recurso que serve para relacionar vários <code>services managers</code>, ou sejá através do método
+<code>createScopedServiceManager()</code> é possivel criar um <code>service manager</code> a partir de uma instância de outro <code>service manager</code>,
+uma herança é criada, existem duas constantes que definem isso: <code>SCOPE_PARENT</code> e <code>SCOPE_CHILD</code>, por default é criado como <code>SCOPE_PARENT</code>
+ou seja o pai, em nosso arquivo <code>index.php</code> criamos um <code>service manager</code> chamado de <code>$sm1</code> e registrado um serviço qualquer.
+<code>index.php</code></p>
+
+<pre><code class="language-PHP">$sm1 = new \Zend\ServiceManager\ServiceManager();
+$sm1-&gt;setInvokableClass('CreditCardTest1', '\Components\EventManager\CreditCard');
+</code></pre>
+
+<p><br/>
+Registramos outro <code>service manager</code>, agora chamado de <code>$sm2</code> com o escopo <code>SCOPE_PARENT</code>, o que acontece aqui agora é que
+<code>$sm2</code> herda os serviços de <code>$sm1</code></p>
+
+<pre><code class="language-PHP">$sm2 = $sm1-&gt;createScopedServiceManager(\Zend\ServiceManager\ServiceManager::SCOPE_PARENT);
+print_r($sm2-&gt;get('CreditCardTest1'));
+</code></pre>
+
+<p><br/>
+Agora vamos criar por último um outro <code>service manager</code>, o <code>$sm3</code> com escopo <code>SCOPE_CHILD</code>, registramos mais um serviço,
+pode ser analisado que nos é retornado um erro quando tentamos chamar o serviço criado por <code>$sm1</code>, não obtendo o mesmo efeito que no <code>$sm2</code>
+que herda de <code>$sm1</code>, mas qual seria a finalidade então do escopo <code>SCOPE_CHILD</code> ?</p>
+
+<pre><code class="language-PHP">$sm3 = $sm1-&gt;createScopedServiceManager(\Zend\ServiceManager\ServiceManager::SCOPE_CHILD);
+$sm3-&gt;setInvokableClass('CreditCardTest3', '\Components\EventManager\CreditCard');
+</code></pre>
+
+<p><br/>
+Para entendermos isso temos que acessar o serviço criado por <code>$sm3</code> usando <code>$sm1</code> e <code>$sm2</code>, resumindo
+<code>$sm3</code> não possui acesso aos serviços criados com <code>$sm2</code> e <code>$sm1</code> pois se trata de um escopo <code>SCOPE_CHILD</code>,
+mas como <code>$sm2</code> possui um escopo <code>SCOPE_PARENT</code> que seria o pai, ele possui acesso aos serviços criados por <code>$sm3</code>
+que foi criado a partir de <code>$sm1</code> e possui acesso a <code>$sm1</code> que é de quem ele herda, <code>$sm1</code> também possui acesso aos serviços
+de <code>$sm3</code> pois se <code>$sm2</code> possui acesso e foi criado a partir de <code>$sm1</code>, <code>$sm1</code> consequentemente vai ter acesso também,
+ficando da seguinte maneira o final do arquivo:</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-PHP">$sm1 = new \Zend\ServiceManager\ServiceManager();
+$sm1-&gt;setInvokableClass('CreditCardTest1', '\Components\EventManager\CreditCard');
+
+$sm2 = $sm1-&gt;createScopedServiceManager(\Zend\ServiceManager\ServiceManager::SCOPE_PARENT);
+print_r($sm2-&gt;get('CreditCardTest1'));
+
+$sm3 = $sm1-&gt;createScopedServiceManager(\Zend\ServiceManager\ServiceManager::SCOPE_CHILD);
+$sm3-&gt;setInvokableClass('CreditCardTest3', '\Components\EventManager\CreditCard');
+print_r($sm1-&gt;get('CreditCardTest3'));
+print_r($sm2-&gt;get('CreditCardTest3'));
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="initializers">Initializers</h4>
+
+<p><code>Initializers</code> são usados para executar tarefas adicionais de inicialização depois que um serviço foi criado.
+O serviço recém-criado é transmitido para todos os <code>initializers</code> registrados após a criação.</p>
+
+<p>Isto é útil para satisfazer as dependências usando a injeção de <code>setter</code>.</p>
+
+<p><code>Initializers</code> também são utilizados para verificar a instância da interface ( ambos definidos e enviados com a <code>factory</code> do usuário) para que essas dependências possam ser satisfeitas.</p>
+
+<p><code>Initializers</code> podem ser registrados usando a chave <code>initializers</code> no array de configuração, e pode ser qualquer classe que possa ser chamada ou que implementa o <code>InitializersInterface</code></p>
+
+<pre><code class="language-PHP">interface UserServiceAwareInterface
+{
+     public function setUserService ( UserService $userService );
+}
+
+class ProductService implements UserServiceAwareInterface
+{
+     protected $userService;
+     public function setUserService ( UserService $userService )
+     {
+          $this-&gt;userService = $userService;
+     }
+}
+
+$config = new Config ( [
+     'initializers' =&gt; [
+          'userService' =&gt; function ( $service, ServiceLocatorInterface $serviceManager ) {
+               if ( $service instanceof UserServiceAwareInterface ) {
+                    $userService = $serviceManager-&gt;get( ‘UserService’ );
+                    $service-&gt;setUserService ( $userService );
+               }
+          }
+     ],
+] );
+$serviceManager = new ServiceManager ( $config );
+</code></pre>
+
+<p><br/></p>
+
+<p>Vamos dar um exemplo de <code>initializer</code> em nosso projeto, criaremos uma propriedade <code>$timezone</code> em nossa classe <code>CreditCard</code> e também um <code>setter</code>
+somente que o <code>setter</code> vamos estabelecer que a passagem do parâmetro seja uma instância de <code>DateTimeZone</code>:
+<code>CreditCard.php</code></p>
+
+<pre><code class="language-PHP">/**
+ * @var
+ */
+protected $timezone;
+
+/**
+ * @param \DateTimeZone $timezone
+ * @return $this
+ */
+public function setTimezone(\DateTimeZone $timezone)
+{
+    $this-&gt;timezone = $timezone;
+    return $this;
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Na <code>index.php</code> o processo vai ser como nos outros exemplos, instância de <code>service manager</code> registrar um serviço com <code>setInvokableClass</code>
+e o adicional seria o método <code>addInitializer</code> que vai ser executado quando o serviço for chamado, ou seja quando for gerado uma instância do
+serviço chamado ele vai ser executado, diferentemente da <code>factory</code> que executa já gerando a instância, em nosso exemplo abaixo setamos
+o timezone dentro do <code>initializer</code> que fara a injeção para a nossa propriedade <code>$timezone</code>, lembrando que as <code>factories</code> podem ser aninhadas
+com os <code>initializer</code> lhe possibilitando executar diversas tarefas.</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-PHP">$serviceManager3 = new \Zend\ServiceManager\ServiceManager();
+$serviceManager3-&gt;setInvokableClass('InitializerCreditCard', '\Components\EventManager\CreditCard');
+$serviceManager3-&gt;addInitializer(function($instance, $serviceManager) {
+    if ( $instance instanceof \Components\EventManager\CreditCard )
+    {
+        $instance-&gt;setTimezone(new \DateTimeZone('Europe/London'));
+    }
+});
+$initializer = $serviceManager3-&gt;get('InitializerCreditCard');
+print_r($initializer);
+</code></pre>
+
+<p>Retorno com initializer:</p>
+
+<pre><code>Components\EventManager\CreditCard Object ( [event:protected] =&gt; [timezone:protected] =&gt; DateTimeZone Object ( [timezone_type] =&gt; 3 [timezone] =&gt; Europe/London ) )
+</code></pre>
+
+<p>Retorno sem initializer:</p>
+
+<pre><code>Components\EventManager\CreditCard Object ( [event:protected] =&gt; [timezone:protected] =&gt; )
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="serviceconfig">ServiceConfig</h4>
+
+<p><code>Service managers</code> e ( <code>plugin managers</code> ) podem ser configurados por meio de um classe que implementa
+<code>Zend\ServiceMager\ConfigInterface</code> para o <code>service manager</code> como um argumento construtor.</p>
+
+<p>A classe <code>Zend\ServiceManager\Config</code> é uma implementação concreta dessa interface que é fornecida com o
+framework e pode ser usada para configurar <code>service managers</code>.</p>
+
+<p>Existem várias maneiras que os <code>services managers</code> podem ser configurados para criar e recuperar serviços,
+incluindo <code>factories</code> e ( <code>abstracts factories</code> ), <code>invokables</code> e <code>aliases</code>.
+Além disso, <code>initializers</code> podem ser registrados para ser executado automaticamente bastando configurar uma injeção de dependência.</p>
+
+<p>O objeto <code>Config</code> recebe um array, e usa esse array para configurar o <code>service manager</code> com <code>factories</code>, <code>abstract factories</code>, <code>invokables</code>, <code>aliases</code> e <code>initializers</code>.</p>
+
+<p>O array é no formato de <code>key-value</code>, onde as chaves são o nome do serviço exclusivo que identifica esse serviço, e o valor é o meio de criar esse serviço.</p>
+
+<p>Note que o nome do serviço registrado é sempre convertido, espaços e caracteres especiais são removidos, e a <code>string</code> é convertida para minúsculas, então <code>user-service</code> é o mesmo que <code>User\Service</code>, que são ambos convertidos para <code>UserService</code></p>
+
+<p><br/></p>
+
+<p>No arquivo <code>index.php</code> vamos demonstrar uma configuração de alguns serviços que configuramos ao longo do estudo do <code>service manager</code> somente
+que agora com um array de configuração que será passado para uma classe chamada <code>Zend\Mvc\Service\ServiceManagerConfig</code> que implementa
+<code>ConfigInterface</code> implementado o método <code>configureServiceManager</code> que recebe <code>ServiceManager</code> e faz todas as configurações como
+<code>setInvokableClass</code>, <code>setFactory</code>, <code>addAbstractFactory</code>, <code>setAlias</code>, <code>setShared</code>, <code>addInitializer</code>, todo aquele processo que fizemos
+nos exemplos anteriores somente que agora de uma maneira que é totalmente transparente, esse é o processo que fazemos no método <code>getServiceConfig</code> na classe <code>Module</code></p>
+
+<p><code>CreditCard.php</code></p>
+
+<pre><code class="language-php">$serviceManager4 = new \Zend\ServiceManager\ServiceManager();
+$config = [
+    'abstract_factories' =&gt; [
+        'Components\ServiceManager\Factories\AbstractCreditCardFactory'
+    ]
+    ,
+    'factories' =&gt; [
+        'CreditCardFactory' =&gt; function ($sm) {
+            return new \Components\EventManager\CreditCard();
+        }
+    ],
+    'invokables' =&gt; [
+        'CreditCardInvokable' =&gt; '\Components\EventManager\CreditCard'
+    ],
+    'shared' =&gt; [
+        'CreditCardInvokable' =&gt; false
+    ]
+];
+
+$serviceConfig = new Zend\Mvc\Service\ServiceManagerConfig( $config );
+$serviceConfig-&gt;configureServiceManager( $serviceManager4 );
+
+print_r( $serviceManager4-&gt;get('CreditCardFactory') );
+print_r( $serviceManager4-&gt;get('CreditCardInvokable') );
+print_r( $serviceManager4-&gt;get('BrandSupported-BRAND_AMEX') );
+</code></pre>
+
+<p>Retorno de ambos os <code>print_r()</code>:</p>
+
+<pre><code>Components\EventManager\CreditCard Object
+(
+[event:protected] =&gt; Zend\EventManager\EventManager Object
+(
+    [events:protected] =&gt; Array
+        (
+        )
+
+    [eventClass:protected] =&gt; Zend\EventManager\Event
+    [identifiers:protected] =&gt; Array
+        (
+            [0] =&gt; Components\EventManager\CreditCard
+        )
+
+    [sharedManager:protected] =&gt; Zend\EventManager\SharedEventManager Object
+        (
+            [identifiers:protected] =&gt; Array
+                (
+                )
+
+        )
+
+)
+
+[timezone:protected] =&gt;
+)
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="delegator">Delegator</h4>
+
+<p>Incluido em Zend Framework 2.2.0.</p>
+
+<p><code>Delegator</code> é um recurso que nos permite substituir um serviço real, com um <code>delegator</code>, ou interagir com um objeto
+produzido por uma <code>factory</code> antes de ser devolvidor por <code>Zend\ServiceManager</code>.</p>
+
+<p><code>Delegator</code> implementa a interface <code>DelegatorFactoryInterface</code></p>
+
+<p>O design pattern <code>delegator</code> é útil em casos em que você deseja quebrar um serviço real em um <code>delegator</code>,
+ou geralmente interceptar ações que estão sendo executadas no <code>delegator</code> em um AOP ( Aspect-oriented programming ).</p>
+
+<p>Vamos exemplificar um uso de <code>delegator</code> em nosso projeto, vamos criar um método <code>brand</code> em nossa classe <code>CreditCard</code> somente retornando um texto.</p>
+
+<p><code>CreditCard.php</code></p>
+
+<pre><code class="language-php">/**
+ * @return string
+ */
+public function brand()
+{
+    return self::BRAND_DINERS_CLUB;
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Criaremos um diretório <code>Components/ServiceManager/Delegator</code> e um arquivo chamado de <code>CreditCardDelegator.php</code>
+essa será sua estrutura:</p>
+
+<p><code>CreditCardDelegator.php</code></p>
+
+<pre><code class="language-php">use Zend\EventManager\EventManagerInterface;
+use Components\EventManager\CreditCard;
+
+class CreditCardDelegator extends CreditCard
+{
+    /**
+     * @var
+     */
+    protected $realBrand;
+
+    /**
+     * @var
+     */
+    protected $eventManager;
+
+    /**
+     * CreditCardDelegator constructor.
+     * @param CreditCard $realBrand
+     * @param EventManagerInterface $eventManager
+     */
+    public function __construct(CreditCard $realBrand, EventManagerInterface $eventManager)
+    {
+        $this-&gt;realBrand = $realBrand;
+        $this-&gt;eventManager = $eventManager;
+    }
+
+    /**
+     * @return string
+     */
+    public function brand()
+    {
+        $this-&gt;eventManager-&gt;trigger('brand', $this);
+        return $this-&gt;realBrand-&gt;brand();
+    }
+}
+</code></pre>
+
+<p>Essa é uma classe <code>delegator</code> onde estende de <code>CreditCard</code>, o construtor recebe o método original
+<code>brand</code> e um <code>EventManager</code>, no método <code>brand</code> temos o retorno de nosso
+método original <code>brand</code> e a <code>trigger</code> que executará antes de retornar a função.</p>
+
+<p><br/></p>
+
+<p>Agora somente implementarmos na <code>index.php</code> o <code>listener</code> e executar o método <code>brand</code>:</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-php">$wrapperCreditCard = new Components\EventManager\CreditCard();
+$eventManager = new Zend\EventManager\EventManager();
+$eventManager-&gt;attach('brand', function() {
+    echo &quot;return string first !\n&quot;;
+});
+
+$delegator = new Components\ServiceManager\Delegator\CreditCardDelegator($wrapperCreditCard, $eventManager);
+echo $delegator-&gt;brand();
+</code></pre>
+
+<p>Retorno:</p>
+
+<pre><code>return string first ! diners_club
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="delegator-factory">Delegator Factory</h4>
+
+<p>Vamos efetuar o mesmo processo somente que agora com uma classe <code>factory</code>, como mencionado <code>Delegator</code> implementa a interface <code>DelegatorFactoryInterface</code>, então criaremos um arquivo no diretório das
+<code>factories</code> : <code>Components/ServiceManager/Factories/CreditCardDelegatorFactory.php</code></p>
+
+<p><code>DelegatorFactoryInterface</code> precisa implementar o método <code>createDelegatorWithName</code> onde possui os seguintes parâmetros:</p>
+
+<ul>
+<li><code>$serviceLocator</code> Utilizado durante a criação do <code>delegator</code> para solicitar algum serviço</li>
+<li><code>$name</code> é o nome canônico do serviço que está sendo solicitado</li>
+<li><code>$requestedName</code> é o nome do serviço como inicialmente requerido para o <code>service locator</code></li>
+<li><code>$callback</code> é um callable que é responsável de instanciar o serviço delegado (a instância do serviço real)</li>
+</ul>
+
+<p>Estrutura do arquivo:</p>
+
+<p><code>CreditCardDelegatorFactory.php</code></p>
+
+<pre><code class="language-php">namespace Components\ServiceManager\Factories;
+
+use Zend\ServiceManager\DelegatorFactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\EventManager\EventManager;
+use Components\ServiceManager\Delegator\CreditCardDelegator;
+
+class CreditCardDelegatorFactory implements DelegatorFactoryInterface
+{
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param string $name
+     * @param string $requestedName
+     * @param callable $callback
+     * @return CreditCardDelegator
+     */
+    public function createDelegatorWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName, $callback)
+    {
+        $realBrand = call_user_func($callback);
+        $eventManager = new EventManager();
+        $eventManager-&gt;attach('brand', function () {
+            echo &quot;return string first, now with factory! \n &quot;;
+        });
+        return new CreditCardDelegator($realBrand, $eventManager);
+    }
+}
+</code></pre>
+
+<p>Igualmente ao outro exemplo, criamos um <code>listener</code> que será disparado quando o método <code>brand</code> for executado.</p>
+
+<p><br/></p>
+
+<p>Implementação na <code>index.php</code></p>
+
+<pre><code class="language-php">$serviceManager = new Zend\ServiceManager\ServiceManager();
+$serviceManager-&gt;setInvokableClass('brand', 'Components\EventManager\CreditCard');
+$serviceManager-&gt;setInvokableClass('brand-delegator-factory', 'Components\ServiceManager\Factories\CreditCardDelegatorFactory');
+$serviceManager-&gt;addDelegator('brand', 'brand-delegator-factory');
+
+$delegator = $serviceManager-&gt;get('brand');
+echo $delegator-&gt;brand();
+</code></pre>
+
+<p>Usamos <code>setInvokableClass</code> para registrar o serviço e para registrar a <code>factory</code>, e finalmente adicionamos o <code>delegator</code> com o método
+<code>addDelegator()</code>, lembrando que também poderia ser registrado o <code>delegator</code> atavés de um array de configuração:</p>
+
+<pre><code class="language-php">$config = array(
+    'delegators' =&gt; array(
+        'invokables' =&gt; array(
+            'brand'                   =&gt; 'Components\EventManager\CreditCard',
+            'brand-delegator-factory' =&gt; 'Components\ServiceManager\Factories\CreditCardDelegatorFactory',
+        ),
+        'brand' =&gt; array(
+             'brand-delegator-factory'
+        ),
+    ),
+);
+</code></pre>
+
+<p>retorno:</p>
+
+<pre><code>return string first, now with factory! diners_club
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="lazy-services">Lazy Services</h4>
+
+<p><code>Zend\ServiceManager</code> pode usar <code>delegator factory</code> para gerar referências (<code>lazy</code>) &ldquo;preguiçosos&rdquo; para seus serviços.</p>
+
+<p><code>Lazy Services</code> são proxies que são instanciados lentamente, e mantém uma referência à instância real do serviço de proxy.</p>
+
+<p>Você pode querer inicializar lentamente um serviço quando ele é instanciado muito frequentemente, mas nem sempre usado.
+Um exemplo típico é a conexão com o banco: é uma dependência de muitos outros elementos no seu aplicativo, mas isso não significa
+que cada pedido vai executar consultas através dele.</p>
+
+<p>Além disso, instanciar uma conexão com o banco de dados pode exigir algum tempo e consumir muitos recursos.</p>
+
+<p>Usar um Proxy na conexão de banco de dados permitiria atrasar a sobrecarga até que o objeto seja realmente necessário.</p>
+
+<p><code>Zend\ServiceManager\Proxy\LazyServiceFactory</code> é um <code>delegator factory</code> capaz de gerar proxies lentamente no carregamento de seus serviços.</p>
+
+<p>O <code>LazyServiceFactory</code> depende de <code>ProxyManager</code>, por isso vamos instalá-lo antes, somente adicionar a seguinte linha no arquivo <code>composer.json</code>
+e executar <code>php composer.phar update</code></p>
+
+<pre><code class="language-php">&quot;ocramius/proxy-manager&quot; : &quot;0.3.*&quot;
+</code></pre>
+
+<p><br/></p>
+
+<p>Em nosso projeto vamos criar um arquivo para demonstrar como funciona um <code>lazy service</code>, dentro do diretório <code>Delegator</code> crie um arquivo com
+nome de <code>CreditCardDelegatorLazy.php</code> que é projetado para ser lento em tempo de instanciação para fins de demonstração:</p>
+
+<pre><code class="language-php">namespace Components\ServiceManager\Delegator;
+
+use Components\EventManager\CreditCard;
+
+class CreditCardDelegatorLazy extends CreditCard
+{
+    /**
+     * CreditCardDelegatorLazy constructor.
+     */
+    public function __construct()
+    {
+        sleep(10);
+    }
+
+    /**
+     * @return string
+     */
+    public function brand()
+    {
+        return parent::brand();
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Não podemos esquecer de registrar o namespace do <code>proxy-manager</code> que acabamos de baixar, ficando da seguinte maneira:</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-php">$loader-&gt;registerNamespace('Components', 'src/Components');
+$loader-&gt;registerNamespace('ProxyManager', 'vendor/ocramius/proxy-manager/src/ProxyManager');
+$loader-&gt;register();
+</code></pre>
+
+<p><br/></p>
+
+<p>Ainda no arquivo <code>index.php</code> vamos chamar nosso serviço <code>lazy</code>, configuramos o <code>service manager</code>
+para gerar proxies em vez de serviços reais atravéz do array de configuração, logo criamos os serviços, as <code>factories</code> e o <code>delegator</code>,
+finalizando, somente executar o método <code>brand</code> que terá um delay de 10 segundos para retornar a mensagem.</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-php">$config = [
+    'lazy_services' =&gt; [
+        'class_map' =&gt; [
+            'CreditCardDelegatorLazy' =&gt; 'Components\ServiceManager\Delegator\CreditCardDelegatorLazy'
+        ],
+    ],
+];
+$serviceManagerLazy = new Zend\ServiceManager\ServiceManager();
+$serviceManagerLazy-&gt;setService('Config', $config);
+$serviceManagerLazy-&gt;setInvokableClass('CreditCardDelegatorLazy', 'Components\ServiceManager\Delegator\CreditCardDelegatorLazy');
+$serviceManagerLazy-&gt;setFactory('creditcard-delegator-factory-lazy', 'Zend\ServiceManager\Proxy\LazyServiceFactoryFactory');
+$serviceManagerLazy-&gt;addDelegator('CreditCardDelegatorLazy', 'creditcard-delegator-factory-lazy');
+$creditCardDelegatorLazy = $serviceManagerLazy-&gt;get('CreditCardDelegatorLazy');
+echo $creditCardDelegatorLazy-&gt;brand();
+</code></pre>
+
+<p>Retorno, com delay de 10 segundos:</p>
+
+<pre><code>diners_club
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h5 id="referências">Referências</h5>
+
+<ul>
+<li><a href="http://framework.zend.com/manual/current/en/modules/zend.service-manager.quick-start.html">Zend\ServiceManager Quick Start</a></li>
+<li><a href="http://ocramius.github.io/blog/zend-framework-2-delegator-factories-explained/">Delegator Factories in Zend Framework 2</a></li>
+<li><a href="https://samsonasik.wordpress.com/2014/01/29/zend-framework-2-getting-closer-with-pluginmanager/">Getting Closer with PluginManager</a></li>
+<li><a href="http://www.zend.com/en/services/certification/zf2-certification-study-guide">ZF2 Certification Study Guide</a></li>
+</ul>
+
+<hr />
+
+<p>O Código usado nesse projeto está no GitHub ==&gt; <a href="https://github.com/luk4z7/zf2-componentization" target="blank">luk4z7</a></p>
+
+<hr />
+
+<p><br/>
+<br/>
+<br/>
+<br/></p>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+          <li class="previous">
+            <a href="http://beard.codes/post/2015-11-06-zf2-eventmanager/" data-toggle="tooltip" data-placement="top" title="EventManager">&larr; Previous Post</a>
+          </li>
+        
+        
+      </ul>
+
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:luk4z_7@hotmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/luk4z7" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/luk4z_7" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://reddit.com/u/luk4z7" title="Reddit">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-reddit-alien fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/luk4z7" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://stackoverflow.com/users/4464469/luk4z-7" title="StackOverflow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="http://linuxsay.com/users/luk4z_7" title="linuxsay">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-linux fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://forum.golangbridge.org/users/luk4z7" title="golangbridge">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-google fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.zend.com/en/yellow-pages/ZEND027410" title="yellowpages">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-code fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="http://beard.codes/index.xml" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          Lucas Alves
+          &nbsp;&bull;&nbsp;
+          2015
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://beard.codes/">Beard.codes</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.25.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://beard.codes/js/main.js"></script>
+<script src="http://beard.codes/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
+<script src="/js/load-photoswipe.js"></script>
+
+
+
+
+  </body>
+</html>
+

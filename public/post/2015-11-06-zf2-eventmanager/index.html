@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>EventManager</title>
+  <meta property="og:title" content="EventManager" />
+  <meta name="twitter:title" content="EventManager" />
+  <meta name="description" content="Componente usado para implementar o padrão observer">
+  <meta property="og:description" content="Componente usado para implementar o padrão observer">
+  <meta name="twitter:description" content="Componente usado para implementar o padrão observer">
+  <meta name="author" content="Lucas Alves"/>
+  <link href='http://beard.codes/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="http://beard.codes/img/avatar-icon.png" />
+  <meta name="twitter:image" content="http://beard.codes/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@luk4z_7" />
+  <meta name="twitter:creator" content="@luk4z_7" />
+  <meta property="og:url" content="http://beard.codes/post/2015-11-06-zf2-eventmanager/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Beard.codes" />
+
+  <meta name="generator" content="Hugo 0.25.1" />
+  <link rel="canonical" href="http://beard.codes/post/2015-11-06-zf2-eventmanager/" />
+  <link rel="alternate" href="http://beard.codes/index.xml" type="application/rss+xml" title="Beard.codes">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://beard.codes/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://beard.codes/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="http://beard.codes/css/highlight.min.css" />
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://beard.codes/">Beard.codes</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Beard.codes" href="http://beard.codes/">
+            <img class="avatar-img" src="http://beard.codes/img/avatar-icon.png" alt="Beard.codes" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              <h1>EventManager</h1>
+                
+                  
+                    <h2 class="post-subheading">Componente usado para implementar o padrão observer</h2>
+                  
+                
+                
+                  <span class="post-meta">
+  Posted on November 6, 6117
+  
+</span>
+
+
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>O <code>EventManager</code> é um componente usado para implementar o padrão <code>observer</code> <code>( aspect-oriented design )</code> e programação orientada a eventos em aplicações <code>Zend Framework 2</code>.
+Um <code>EventManager</code> pode ser criado por simplesmente instanciar um novo objeto, exemplo:</p>
+
+<pre><code class="language-php">$eventManager = new EventManager();
+</code></pre>
+
+<p></p>
+
+<h4 id="attaching-event-listeners">Attaching Event Listeners</h4>
+
+<p>Você usa o método <code>attach()</code> para anexar ouvintes de eventos para o <code>event manager.</code>
+Esse método leva três parâmetros, o nome do evento para anexar, uma que pode ser chamado para executar quando o evento é acionado, e a prioridade do evento.</p>
+
+<p><br/></p>
+
+<h5 id="parâmetros">Parâmetros:</h5>
+
+<h5 id="nome-do-evento">Nome do evento</h5>
+
+<p>O nome do evento é o identificador exclusivo para este evento.
+Será usado para disparar o evento em um momento posterior.</p>
+
+<h5 id="callback">callback</h5>
+
+<p>O parâmetro <code>callback</code> será chamado quando o evento nomeado é acionado.
+No <code>callback</code> será passado um único parâmetro que será uma instância da <code>EventInterface</code>,
+geralmente um evento que é uma implementação concreta dessa interface que é fornecido com o framework.
+O <code>EventInterface</code> fornece informações sobre o evento disparado através dos métodos:</p>
+
+<blockquote>
+<p><code>getName()</code></p>
+
+<p><code>getTarget()</code></p>
+
+<p><code>getParams()</code></p>
+</blockquote>
+
+<p>um parâmetro adicional passado para o evento pode ser acessado usando o método <code>getParams()</code>.</p>
+
+<h5 id="prioridade">Prioridade</h5>
+
+<p>O parâmetro opcional prioridade é usado para determinar a ordem em que os ouvintes de evento são chamados quando vários ouvintes são registrados para o mesmo evento.
+Prioridades podem ser positivas ou negativas, e que a prioridade padrão é 1.
+se os ouvintes compartilham a mesma prioridade, eles são disparados na ordem em que foram registrados.</p>
+
+<p>Exemplo de uso no arquivo <code>Module.php</code> para disparar um método de validação</p>
+
+<pre><code class="language-PHP">public function init(ModuleManager $moduleManager)
+{
+    $sharedEvents = $moduleManager-&gt;getEventManager()-&gt;getSharedManager();
+    $sharedEvents-&gt;attach('Zend\Mvc\Controller\AbstractActionController', MvcEvent::EVENT_DISPATCH, array($this, 'validaAuth'), 100);
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Exemplo de <code>listener</code></p>
+
+<pre><code class="language-PHP">$logger = new Logger();
+$eventManager-&gt;attach('insert', function(EventInterface $event) use ($logger) {
+     $params = $event-&gt;getParams();
+     $logger-&gt;log('Usuário ' . $params['id'] . ' adicionou ' . $params['itemId']);
+}, 100);
+</code></pre>
+
+<p>O <code>listener</code> ainda precisa de um gatilho <code>trigger</code> que é o responsável por executar a ação</p>
+
+<p><br/>
+<br/></p>
+
+<h4 id="triggering-events">Triggering Events</h4>
+
+<p>Evento são acionados através do <code>Event Manager</code> usando o método <code>trigger()</code>.
+O método <code>trigger</code> leva 4 parâmetros: o nome do evento, um alvo opcional,
+uma matriz opcional de argumentos, e um callback opcional.</p>
+
+<p><br/></p>
+
+<h5 id="parâmetros-1">Parâmetros:</h5>
+
+<h5 id="nome-do-evento-1">Nome do evento</h5>
+
+<p>O nome do evento é o identificador exclusivo para este evento.
+em ordem para os <code>listeners</code> serem disparados, este deve ser idêntico ao nome usado
+para anexar um <code>listener</code> no método <code>attach()</code></p>
+
+<h5 id="alvo">alvo</h5>
+
+<p>O parâmetro <code>$target</code> normalmente será a instância do objeto atual,
+ou o nome da função de dispara de fora um objeto ( ou uma <code>static function</code> ).</p>
+
+<h5 id="array-de-argumentos">array de argumentos</h5>
+
+<p>O parâmetro argumento é um <code>key/value</code> array com argumentos que serão passados para o
+evento e está disponível no <code>listener</code> através do método <code>getParams()</code>.</p>
+
+<h5 id="callback-1">callback</h5>
+
+<p>O <code>callback</code> pode e será chamado depois que o <code>listener</code> registrado for concluído.
+O <code>callback</code> será passado os resultados retornados a partir desse <code>listener</code>.</p>
+
+<p><br/></p>
+
+<h4 id="usando-o-componente-eventmanager">Usando o componente EventManager</h4>
+
+<h5 id="estrutura-do-projeto">Estrutura do projeto:</h5>
+
+<ul>
+<li>zf2-componentization
+
+<ul>
+<li>src
+
+<ul>
+<li>Components
+
+<ul>
+<li>EventManager
+
+<ul>
+<li>CreditCard.php</li>
+<li>ListenerAggregate.php</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>vendor</li>
+<li>index.php</li>
+<li>composer.json</li>
+</ul></li>
+</ul>
+
+<p><br/></p>
+
+<p>Configurando o <code>composer.json</code>, depois somente baixar o
+<a href="https://getcomposer.org/download/">composer</a> e executar:</p>
+
+<p><code>composer.json</code></p>
+
+<pre><code class="language-php">{
+    &quot;name&quot;: &quot;Your project&quot;,
+    &quot;description&quot;: &quot;Componentização ZF2&quot;,
+    &quot;license&quot;: &quot;MIT&quot;,
+    &quot;config&quot;: {
+        &quot;process-timeout&quot;: 3000
+    },
+    &quot;require&quot;: {
+        &quot;php&quot;: &quot;&gt;=5.5&quot;,
+        &quot;zendframework/zendframework&quot;: &quot;2.3&quot;
+    },
+    &quot;autoload&quot;: {
+        &quot;psr-0&quot;: {
+            &quot;Components&quot;: &quot;src/Components/&quot;
+        }
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Configurando o autoloader para o framework e para nosso namespace Components</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-PHP">require 'vendor/zendframework/zendframework/library/Zend/Loader/StandardAutoloader.php';
+
+$loader = new Zend\Loader\StandardAutoloader([
+    'autoregister_zf' =&gt; true
+]);
+$loader-&gt;registerNamespace('Components', 'src/Components');
+$loader-&gt;register();
+</code></pre>
+
+<p><br/></p>
+
+<p>Criamos a seguinte estrutura na classe <code>CreditCard</code> onde ela implementa a interface
+<code>EventManagerAwareInterface</code> onde possui o método com a instância de
+<code>EventManager</code>, possui um atributo <code>$event</code> onde ele recebe a instância
+de <code>EventManager</code> com a configuração do <code>Identifiers</code> que estabelece o nome nome da classe
+que o evento está chamando, ou seja o relacionamento do <code>EventManager</code> que está sendo criado
+com uma classe, no nosso caso a classe <code>CreditCard</code>, no próximo exemplo será criado o <code>trigger</code> que será disparado</p>
+
+<p><code>CreditCard.php</code></p>
+
+<pre><code class="language-PHP">namespace Components\EventManager;
+
+use Zend\EventManager\EventManager as Event;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
+
+class CreditCard implements EventManagerAwareInterface
+{
+    /**
+     * @var
+     */
+    protected $event;
+
+    /**
+     * @param EventManagerInterface $eventManager
+     * @return $this
+     */
+    public function setEventManager(EventManagerInterface $eventManager)
+    {
+        $eventManager-&gt;setIdentifiers([
+            __CLASS__,
+            get_called_class()
+        ]);
+        $this-&gt;event = $eventManager;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventManager()
+    {
+        if (null == $this-&gt;event)
+            $this-&gt;setEventManager(new Event());
+
+        return $this-&gt;event;
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Criamos o método <code>getCreditCardFlag</code> onde ele resgata o <code>EventManager</code>
+e criamos o <code>trigger</code>, <code>getCreditCardFlag</code> recebe um parâmetro que será o número
+do cartão que será retornado no <code>callback</code> atravéz do método <code>getParam()</code> a badeira
+do cartão de crédito.</p>
+
+<p><code>CreditCard.php</code></p>
+
+<pre><code class="language-PHP">&lt;?php
+
+namespace Components\EventManager;
+
+use Zend\EventManager\EventManager as Event;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
+
+class CreditCard implements EventManagerAwareInterface
+{
+    /**
+     * @var
+     */
+    protected $event;
+
+    const BRAND_VISA = 'visa';
+    const BRAND_MASTERCARD = 'mastercard';
+    const BRAND_DISCOVER = 'discover';
+    const BRAND_AMEX = 'amex';
+    const BRAND_DINERS_CLUB = 'diners_club';
+    const BRAND_JCB = 'jcb';
+    const BRAND_SWITCH = 'switch';
+    const BRAND_SOLO = 'solo';
+    const BRAND_DANKORT = 'dankort';
+    const BRAND_MAESTRO = 'maestro';
+    const BRAND_FORBRUGSFORENINGEN = 'forbrugsforeningen';
+    const BRAND_LASER = 'laser';
+
+    /**
+     * @param EventManagerInterface $eventManager
+     * @return $this
+     */
+    public function setEventManager(EventManagerInterface $eventManager)
+    {
+        $eventManager-&gt;setIdentifiers([
+            __CLASS__,
+            get_called_class()
+        ]);
+        $this-&gt;event = $eventManager;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventManager()
+    {
+        if (null == $this-&gt;event)
+            $this-&gt;setEventManager(new Event());
+
+        return $this-&gt;event;
+    }
+
+
+    /**
+     * @param $number
+     */
+    public function getCreditCardFlag($number)
+    {
+        $this-&gt;getEventManager()-&gt;trigger(
+            __FUNCTION__,
+            $this,
+            ['flag' =&gt; $this-&gt;getBrand($number)]
+        );
+    }
+
+    /**
+     * @param $number
+     * @return int|string
+     */
+    public function getBrand($number)
+    {
+        foreach ($this-&gt;getSupportedBrands() as $brand =&gt; $val) {
+            if (preg_match($val, $number)) {
+                return $brand;
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getSupportedBrands()
+    {
+        return array(
+            static::BRAND_VISA =&gt; '/^4\d{12}(\d{3})?$/',
+            static::BRAND_MASTERCARD =&gt; '/^(5[1-5]\d{4}|677189)\d{10}$/',
+            static::BRAND_DISCOVER =&gt; '/^(6011|65\d{2}|64[4-9]\d)\d{12}|(62\d{14})$/',
+            static::BRAND_AMEX =&gt; '/^3[47]\d{13}$/',
+            static::BRAND_DINERS_CLUB =&gt; '/^3(0[0-5]|[68]\d)\d{11}$/',
+            static::BRAND_JCB =&gt; '/^35(28|29|[3-8]\d)\d{12}$/',
+            static::BRAND_SWITCH =&gt; '/^6759\d{12}(\d{2,3})?$/',
+            static::BRAND_SOLO =&gt; '/^6767\d{12}(\d{2,3})?$/',
+            static::BRAND_DANKORT =&gt; '/^5019\d{12}$/',
+            static::BRAND_MAESTRO =&gt; '/^(5[06-8]|6\d)\d{10,17}$/',
+            static::BRAND_FORBRUGSFORENINGEN =&gt; '/^600722\d{10}$/',
+            static::BRAND_LASER =&gt; '/^(6304|6706|6709|6771(?!89))\d{8}(\d{4}|\d{6,7})?$/',
+        );
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Ficando da seguinte maneira o arquivo de inicialização <code>index.php</code>, é instânciado <code>CreditCard</code>
+resgatando o <code>EventManager</code> e criando um <code>listener</code> com o método <code>attach()</code>, é passado o nome
+do método que possui o <code>trigger()</code> o segundo parâmetro é o <code>callback</code> com o retorno do
+<code>EventManager</code> passamos a <code>key</code> <code>flag</code> para o método <code>getParam()</code> que nos retorna o nome
+da bandeira do número de cartão de crédito que foi passado como parâmetro para <code>getCreditCardFlag</code></p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-PHP">require 'vendor/zendframework/zendframework/library/Zend/Loader/StandardAutoloader.php';
+
+$loader = new Zend\Loader\StandardAutoloader([
+    'autoregister_zf' =&gt; true
+]);
+$loader-&gt;registerNamespace('Components', 'src/Components');
+$loader-&gt;register();
+
+$creditCard = new \Components\EventManager\CreditCard();
+$creditCard-&gt;getEventManager()-&gt;attach('getCreditCardFlag', function($e) {
+    var_dump($e-&gt;getParam('flag'));
+});
+$creditCard-&gt;getCreditCardFlag(4444333322221111); // visa
+</code></pre>
+
+<p><br/></p>
+
+<p>Retorno:</p>
+
+<pre><code>visa
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="short-circuiting">Short Circuiting</h4>
+
+<p>Quando vários <code>listeners</code> são registrados é possível parar todos os <code>listener</code> disparando um
+<code>stopping event propagation</code> a partir de um <code>listener</code>.
+Isso é feito usando o <code>stopPropagation()</code> dentro do <code>listener</code>.</p>
+
+<pre><code class="language-PHP">// email the user
+$ventManager-&gt;attach('item-added', function(EventInterface $event) use ($email) {
+     $params = $event-&gt;getParams();
+     $result = $email-&gt;emailUser($params['userId']);
+     if ($result) {
+          $event-&gt;stopPropagation(true);
+     }
+}, 100);
+
+// log the item added
+$eventManager-&gt;attach('item-added', function(EventInterface $event) use ($logger) {
+     $params = $event-&gt;getParams();
+     $logger-&gt;log('User ' . $params['userId'] . ' added item ' . $params['itemId']);
+});
+</code></pre>
+
+<p><br/></p>
+
+<p>Em nosso projeto vamos criar um método novo na classe <code>CreditCard</code>, onde usamos outro tipo de <code>trigger</code>
+<code>triggerUntil</code> que significa que até quando uma determinada condição não estiver satisfeita não é retornado
+o resultado, isso é util quando queremos que a depender do resultado possa ser tomado outro fluxo
+dentro da aplicação, utilizamos um <code>callback</code> para fazer uma condição, quando o valor passado não for
+esperado é emitido uma mensagem e o <code>trigger</code> é finalizado.</p>
+
+<p><code>CreditCard.php</code></p>
+
+<pre><code class="language-PHP">    /**
+     * @param $number
+     * @return mixed
+     */
+    public function brandSuported($number)
+    {
+        $arg = compact('number');
+        $result = $this-&gt;getEventManager()-&gt;triggerUntil(
+            __FUNCTION__,
+            $this,
+            $arg,
+            function ($v) use ($number) {
+                if ($this-&gt;getBrand($number) != self::BRAND_MASTERCARD) {
+                    return true;
+                }
+            }
+        );
+
+        if ($result-&gt;stopped()) {
+            echo &quot; | Somente aceitamos mastercard | &quot;;
+            return $result-&gt;last();
+        }
+
+        echo &quot; Processo de transa&amp;ccedil;&amp;atilde;o em andamento ... &quot;;
+    }
+</code></pre>
+
+<p><br/></p>
+
+<p>Ficando da seguinte maneira a <code>index.php</code>, usamos o novo método criado na classe
+<code>CreditCard</code>, <code>brandSuported()</code>, passamos dois números de cartão de crédito para simular o exemplo,
+um de bandeira visa e outro e bandeira mastercard, note que também alteramos o segundo
+parâmetro do <code>listener</code> para <code>*</code> pois estamos chamando mais de um método, então
+o <code>listener</code> escuta qualquer método, também pode ser passado em formato de <code>array</code>
+<code>['getCreditCardFlag', 'brandSuported']</code></p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-PHP">require 'vendor/zendframework/zendframework/library/Zend/Loader/StandardAutoloader.php';
+
+$loader = new Zend\Loader\StandardAutoloader([
+    'autoregister_zf' =&gt; true
+]);
+$loader-&gt;registerNamespace('Components', 'src/Components');
+$loader-&gt;register();
+
+$creditCard = new \Components\EventManager\CreditCard();
+$creditCard-&gt;getEventManager()-&gt;attach('*', function($e) {
+    var_dump( $e-&gt;getParam('flag') );
+});
+$creditCard-&gt;getCreditCardFlag(4444333322221111); // visa
+
+// Short Circuiting
+$creditCard-&gt;brandSuported(4444333322221111);     // visa
+$creditCard-&gt;brandSuported(5266736406590700);     // mastercard
+</code></pre>
+
+<p><br/></p>
+
+<p>Retorno:</p>
+
+<pre><code>visa | Somente aceitamos mastercard | Processo de transação em andamento ...
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="aggregate-listeners">Aggregate Listeners</h4>
+
+<p>O <code>ListenerAggregateInterface</code> fornece um método alternativo para anexar vários
+<code>listeners</code> através de uma única classe.</p>
+
+<p><code>Aggregate listeners</code> permitem que vários <code>listeners</code> possam ser anexados,
+mas o mais importante desprendido de um único lugar.
+Os <code>listeners</code> também são acionados dentro do escopo da classe que implementa a interface,
+que pode ser conveniente para os <code>listeners</code> que precisam fazer uso de serviços externos.
+<code>Aggregate listeners</code> são uma excelente escolha se você precisa separar <code>listeners</code>,
+como eles permitem que você guarde o <code>Zend\Stdlib\Callbackhandler</code>
+totalmente dentro do <code>aggregate listener</code>, o que torna a remoção mais fácil.</p>
+
+<p><code>listener</code> estão ligados utilizando o método <code>attach()</code>, passando uma instância
+<code>EventManagerInterface</code> como o parâmetro único.
+<code>listener</code> são separadas usando o método de <code>detach()</code>, que aceita uma instância
+<code>EventManagerInterface</code> como seu parâmetro.</p>
+
+<pre><code class="language-PHP">class MailAggregateListener implements ListenerAggregateInterface
+{
+    protected $listeners = [];
+    protected $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this-&gt;emailService = $emailService;
+    }
+
+    public function handleEvent(EventInterface $event)
+    {
+        $this-&gt;emailService-&gt;emailEvent($event);
+    }
+
+    public function attach(EventManagerInterface $eventManager)
+    {
+        $listenTo = array(‘add-cart’, ‘remove-cart’, ‘empty-cart’, ‘checkout-cart’);
+        foreach ($listenTo as $listen) {
+            $this-&gt;listeners[$listen] = $this-&gt;attach($listen, [$this, ‘handleEvent’]);
+        }
+    }
+
+    public function detach(EventManagerInterface $eventManager)
+    {
+        // just detach remove-cart listener
+        $eventManager-&gt;detach($this-&gt;listeners[‘remove-cart’]);
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Em nosso projeto vamos criar um arquivo chamado de <code>ListenerAggregate.php</code> dentro do diretório
+<code>Components/EventManager/</code>, classe chamada de <code>ListenerAggregate</code> implementando <code>ListenerAggregateInterface</code>
+onde implementaremos dois métodos comforme a interface nos provê <code>attach()</code> e <code>detach()</code> onde será feito a
+implementação de criação dos <code>listeners</code> e a remoção dos mesmos.
+Criamos a mais três métodos <code>executeProcessCreditCardOne()</code>, <code>executeProcessCreditCardTwo()</code> e <code>executeProcessCreditCardThree()</code>
+onde são registrados no método <code>attach()</code>, como se trata de <code>ListenerAggregate</code> podem ser criados quantos métodos forem necessários
+e atachados, o último parâmetro passado para o <code>attach</code> serve para especificar a prioridade de execução, quando negativo
+a prioridade é menor, quando não especificado a prioridade é executado por ordem de registro.</p>
+
+<p><code>ListenerAggregate.php</code></p>
+
+<pre><code class="language-PHP">namespace Components\EventManager;
+
+use Zend\EventManager\EventManagerInterface;
+use Zend\EventManager\ListenerAggregateInterface;
+
+class ListenerAggregate implements ListenerAggregateInterface
+{
+    protected $listeners = [];
+    protected $params;
+
+    public function __construct($params)
+    {
+        $this-&gt;params = $params;
+    }
+
+    /**
+     * @param EventManagerInterface $events
+     */
+    public function attach(EventManagerInterface $events)
+    {
+        $array = new \ArrayIterator($this-&gt;params);
+        while($array-&gt;valid())
+        {
+            $this-&gt;listeners[] = $events-&gt;attach( $array-&gt;current()[0], [$this, $array-&gt;current()[1]], $array-&gt;current()[2] );
+            $array-&gt;next();
+        }
+    }
+
+    /**
+     * @param EventManagerInterface $events
+     */
+    public function detach(EventManagerInterface $events)
+    {
+        foreach ( $this-&gt;listeners as $key =&gt; $listener)
+        {
+            if ( $events-&gt;detach($listener) )
+                unset($this-&gt;listeners[$key]);
+        }
+    }
+
+    /**
+     * Process One
+     */
+    public function executeProcessCreditCardOne()
+    {
+        echo &quot; | Execu&amp;ccedil;&amp;atilde;o do primeiro processamento de cart&amp;atilde;o de cr&amp;eacute;dito | &quot;;
+    }
+
+    /**
+     * Process Two
+     */
+    public function executeProcessCreditCardTwo()
+    {
+        echo &quot; Execu&amp;ccedil;&amp;atilde;o do segundo processamento de cart&amp;atilde;o de cr&amp;eacute;dito | &quot;;
+    }
+
+    /**
+     * Process Three
+     */
+    public function executeProcessCreditCardThree()
+    {
+        echo &quot; Execu&amp;ccedil;&amp;atilde;o do terceiro processamento de cart&amp;atilde;o de cr&amp;eacute;dito | &quot;;
+    }
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Na classe <code>CreditCard</code> vamos adicionar um novo método que possui os vários eventos que vamos registrar
+com <code>attachAggregate()</code> no próximo exemplo.</p>
+
+<pre><code class="language-PHP">/**
+ * @param $number
+ */
+public function processCreditCard($number)
+{
+    $this-&gt;getEventManager()-&gt;trigger(
+        'processCreditCardOne',
+        $this,
+        ['number' =&gt; $number, 'status' =&gt; 'primeiro processamento'],
+        function () {}
+    );
+
+    $this-&gt;getEventManager()-&gt;trigger(
+        'processCreditCardTwo',
+        $this,
+        ['number' =&gt; $number, 'status' =&gt; 'segundo processamento'],
+        function () {}
+    );
+
+    $this-&gt;getEventManager()-&gt;trigger(
+        'processCreditCardThree',
+        $this,
+        ['number' =&gt; $number, 'status' =&gt; 'terceiro processamento'],
+        function () {}
+    );
+}
+</code></pre>
+
+<p><br/></p>
+
+<p>Na <code>index</code> instânciamos o <code>ListenerAggregate()</code> passando para seu construtor os nomes dos métodos e suas
+prioridades, usamos o método <code>attachAggregate()</code> passando o objeto da classe <code>ListenerAggregate()</code> que foi
+criada com os <code>listeners</code>, chamamos o método <code>processCreditCard()</code> onde ele possui vários <code>triggers</code>
+ficando da seguinte maneira:</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-php">require 'vendor/zendframework/zendframework/library/Zend/Loader/StandardAutoloader.php';
+
+$loader = new Zend\Loader\StandardAutoloader([
+    'autoregister_zf' =&gt; true
+]);
+$loader-&gt;registerNamespace('Components', 'src/Components');
+$loader-&gt;register();
+
+$creditCard = new \Components\EventManager\CreditCard();
+$creditCard-&gt;getEventManager()-&gt;attach('*', function($e) {
+    if (!empty($e-&gt;getParam('flag')))
+        echo $e-&gt;getParam('flag');
+});
+$creditCard-&gt;getCreditCardFlag(4444333322221111); // visa
+
+// Short Circuiting
+$creditCard-&gt;brandSuported(4444333322221111);     // visa
+$creditCard-&gt;brandSuported(5266736406590700);     // mastercard
+
+// Aggregate Listeners
+$listenerAggregate = new \Components\EventManager\ListenerAggregate([
+    ['processCreditCardOne', 'executeProcessCreditCardOne', 100],
+    ['processCreditCardTwo', 'executeProcessCreditCardTwo', 100],
+    ['processCreditCardThree', 'executeProcessCreditCardThree', -100],
+]);
+$creditCard-&gt;getEventManager()-&gt;attachAggregate($listenerAggregate);
+$creditCard-&gt;processCreditCard(5266736406590700);
+</code></pre>
+
+<p><br/></p>
+
+<p>Retorno:</p>
+
+<pre><code>visa | Somente aceitamos mastercard | Processo de transação em andamento ... | Execução do primeiro processamento de cartão de crédito | Execução do segundo processamento de cartão de crédito | Execução do terceiro processamento de cartão de crédito |
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h4 id="share-event-manager">Share Event Manager</h4>
+
+<p>A interface <code>SharedEventManagerInterface</code> fornece uma maneira de anexar <code>listeners</code> para muitos <code>events managers</code>,
+ou para um <code>event manager</code> não no âmbito da própria classe.</p>
+
+<p>Significa que um módulo pode anexar um <code>listener</code> de eventos de outro módulo sem necessitar acesso direto a qualquer das ocorrências da classe do módulo.</p>
+
+<p>O <code>SharedManagerInterface</code> é uma implementação concreta do <code>SharedEventManagerInterface</code> que é fornecido com o framework.</p>
+
+<p>Anexando a <code>listeners</code> de eventos a um <code>SharedEventManager</code> é semelhante a um <code>EventManager</code> padrão.</p>
+
+<p>O método <code>attach()</code> é usado mas com um parâmetro extra no início;
+<code>$id</code> - o identificador para o evento acionado.</p>
+
+<p>Cada instância de <code>EventManager</code> pode compor zero ou mais identificadores.</p>
+
+<pre><code class="language-PHP">$sharedEventManager = new SharedEventManager();
+$sharedEventManager-&gt;attach(‘Product’, ‘add’, function(Event $event) {
+     echo ‘Product Added!’;
+});
+
+$eventManager = new EventManager(‘Product’);
+$eventManager-&gt;setSharedManager($sharedEventManager);
+$eventManager-&gt;trigger(‘add’, new Product());
+</code></pre>
+
+<p><br/></p>
+
+<p>Em nosso arquivo <code>index.php</code> vamos instânciar <code>SharedEventManager</code> e registar um <code>listener</code>
+para <code>Components\EventManager\CreditCard</code> método <code>getCreditCardFlag</code>, ficando da seguinte maneira:</p>
+
+<p><code>index.php</code></p>
+
+<pre><code class="language-php">require 'vendor/zendframework/zendframework/library/Zend/Loader/StandardAutoloader.php';
+
+$loader = new Zend\Loader\StandardAutoloader([
+    'autoregister_zf' =&gt; true
+]);
+$loader-&gt;registerNamespace('Components', 'src/Components');
+$loader-&gt;register();
+
+$creditCard = new \Components\EventManager\CreditCard();
+$creditCard-&gt;getEventManager()-&gt;attach('*', function($e) {
+    if (!empty($e-&gt;getParam('flag')))
+        echo $e-&gt;getParam('flag');
+});
+$creditCard-&gt;getCreditCardFlag(4444333322221111); // visa
+
+// Short Circuiting
+$creditCard-&gt;brandSuported(4444333322221111);     // visa
+$creditCard-&gt;brandSuported(5266736406590700);     // mastercard
+
+// Aggregate Listeners
+$listenerAggregate = new \Components\EventManager\ListenerAggregate([
+    ['processCreditCardOne', 'executeProcessCreditCardOne', 100],
+    ['processCreditCardTwo', 'executeProcessCreditCardTwo', 100],
+    ['processCreditCardThree', 'executeProcessCreditCardThree', -100],
+]);
+$creditCard-&gt;getEventManager()-&gt;attachAggregate($listenerAggregate);
+$creditCard-&gt;processCreditCard(5266736406590700);
+
+// Shared Event Manager
+$sharedEvent = new Zend\EventManager\SharedEventManager();
+$sharedEvent-&gt;attach('Components\EventManager\CreditCard', 'getCreditCardFlag', function($e) {
+
+    echo &quot;&lt;br/&gt;&lt;br/&gt;&quot;;
+    echo &quot;&lt;strong&gt;Name:&lt;/strong&gt; &quot;;
+    echo $e-&gt;getName() . &quot;&lt;br/&gt;&lt;br/&gt;&quot;;
+
+    echo &quot;&lt;strong&gt;Target:&lt;/strong&gt; &quot;;
+    echo get_class($e-&gt;getTarget());
+    echo &quot;&lt;br/&gt;&lt;br/&gt;&quot;;
+
+    echo &quot;&lt;strong&gt;Bandeira:&lt;/strong&gt; &quot;;
+    echo $e-&gt;getParam('flag');
+
+});
+
+$newCreditCard = new \Components\EventManager\CreditCard();
+$newCreditCard-&gt;getEventManager()-&gt;setSharedManager($sharedEvent);
+$newCreditCard-&gt;getCreditCardFlag(30083521152975);
+</code></pre>
+
+<p><br/></p>
+
+<p>Será observado que o retorno terá sucesso somente por causa da linha</p>
+
+<pre><code class="language-PHP">$newCreditCard-&gt;getEventManager()-&gt;setSharedManager($sharedEvent);
+</code></pre>
+
+<p><br/></p>
+
+<p>Retorno:</p>
+
+<pre><code>visa | Somente aceitamos mastercard | Processo de transação em andamento ... | Execução do primeiro processamento de cartão de crédito | Execução do segundo processamento de cartão de crédito | Execução do terceiro processamento de cartão de crédito |
+
+Name: getCreditCardFlag
+
+Target: Components\EventManager\CreditCard
+
+Bandeira: diners_club
+</code></pre>
+
+<p><br/>
+<br/></p>
+
+<h5 id="referências">Referências</h5>
+
+<ul>
+<li><a href="http://framework.zend.com/manual/current/en/modules/zend.event-manager.event-manager.html">The EventManager</a></li>
+<li><a href="http://www.zend.com/en/services/certification/zf2-certification-study-guide">ZF2 Certification Study Guide</a></li>
+</ul>
+
+<hr />
+
+<p>O Código usado nesse projeto está no GitHub ==&gt; <a href="https://github.com/luk4z7/zf2-componentization" target="blank">luk4z7</a></p>
+
+<hr />
+
+<p><br/>
+<br/>
+<br/>
+<br/></p>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        
+          <li class="next">
+            <a href="http://beard.codes/post/2015-11-18-zf2-servicemanager/" data-toggle="tooltip" data-placement="top" title="ServiceManager">Next Post &rarr;</a>
+          </li>
+        
+      </ul>
+
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:luk4z_7@hotmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/luk4z7" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/luk4z_7" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://reddit.com/u/luk4z7" title="Reddit">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-reddit-alien fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/luk4z7" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://stackoverflow.com/users/4464469/luk4z-7" title="StackOverflow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="http://linuxsay.com/users/luk4z_7" title="linuxsay">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-linux fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://forum.golangbridge.org/users/luk4z7" title="golangbridge">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-google fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.zend.com/en/yellow-pages/ZEND027410" title="yellowpages">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-code fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="http://beard.codes/index.xml" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          Lucas Alves
+          &nbsp;&bull;&nbsp;
+          2015
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://beard.codes/">Beard.codes</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.25.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://beard.codes/js/main.js"></script>
+<script src="http://beard.codes/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
+<script src="/js/load-photoswipe.js"></script>
+
+
+
+
+  </body>
+</html>
+

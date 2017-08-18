@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on Beard.codes</title>
+    <link>http://beard.codes/page/</link>
+    <description>Recent content in Pages on Beard.codes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>luk4z_7@hotmail.com (Lucas Alves)</managingEditor>
+    <webMaster>luk4z_7@hotmail.com (Lucas Alves)</webMaster>
+    
+	<atom:link href="http://beard.codes/page/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About me</title>
+      <link>http://beard.codes/page/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>luk4z_7@hotmail.com (Lucas Alves)</author>
+      <guid>http://beard.codes/page/about/</guid>
+      <description>Resume I&amp;rsquo;m a software developer since 2009, open source enthusiast, enjoy working with technology unix like
+Career See on my linkedin page about my carrer
+Community You can also find me in the linux and golang communities or on my github profile about my open source projects</description>
+    </item>
+    
+  </channel>
+</rss>
