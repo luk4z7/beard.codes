@@ -22,25 +22,25 @@ var i interface{} = "hello"
 Example of `Type Assertions` with a `i` variable, knowing that the value of the` i` variable is a `string`, we have
 the following `Assertion`
 ```go
-    s := i.(string)
-    fmt.Println(s) // hello
+s := i.(string)
+fmt.Println(s) // hello
 ```
 
 in this example we know exactly the type of value that the interface received, but when we try to do
 an assertion of a value that does not match the value of `i`?
 ```go
-    f = i.(float64)
-    fmt.Println(f)
+f = i.(float64)
+fmt.Println(f)
 ```
 
 we received a `panic: interface conversion: interface {} is string, not float64` error, to deal with
 this error we must use a Boolean validation to identify if `assertion` was successful.
 ```go
-	if f, ok := i.(float64); ok {
-		fmt.Println(f)
-	} else {
-		fmt.Println("not a float")
-	}
+if f, ok := i.(float64); ok {
+    fmt.Println(f)
+} else {
+    fmt.Println("not a float")
+}
 ```
 
 

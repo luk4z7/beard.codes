@@ -5,12 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>About me</title>
-  <meta property="og:title" content="About me" />
-  <meta name="twitter:title" content="About me" />
-  <meta name="description" content="Software engineer">
-  <meta property="og:description" content="Software engineer">
-  <meta name="twitter:description" content="Software engineer">
+  <title>Type assertions</title>
+  <meta property="og:title" content="Type assertions" />
+  <meta name="twitter:title" content="Type assertions" />
+  <meta name="description" content="A type assertion provides access to an interface value&#39;s underlying concrete value.">
+  <meta property="og:description" content="A type assertion provides access to an interface value&#39;s underlying concrete value.">
+  <meta name="twitter:description" content="A type assertion provides access to an interface value&#39;s underlying concrete value.">
   <meta name="author" content="Lucas Alves"/>
   <link href='http://beard.codes/img/favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="http://beard.codes/img/avatar-icon.png" />
@@ -18,12 +18,12 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@luk4z_7" />
   <meta name="twitter:creator" content="@luk4z_7" />
-  <meta property="og:url" content="http://beard.codes/page/about/" />
+  <meta property="og:url" content="http://beard.codes/post/2018-09-21-go-type-assertion/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Beard.codes" />
 
   <meta name="generator" content="Hugo 0.25.1" />
-  <link rel="canonical" href="http://beard.codes/page/about/" />
+  <link rel="canonical" href="http://beard.codes/post/2018-09-21-go-type-assertion/" />
   <link rel="alternate" href="http://beard.codes/index.xml" type="application/rss+xml" title="Beard.codes">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -162,14 +162,20 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <div class="page-heading">
-              <h1>About me</h1>
+            <div class="post-heading">
+              <h1>Type assertions</h1>
                 
                   
-                    <hr class="small">
-                    <span class="page-subheading">Software engineer</span>
+                    <h2 class="post-subheading">A type assertion provides access to an interface value&#39;s underlying concrete value.</h2>
                   
                 
+                
+                  <span class="post-meta">
+  Posted on September 21, 21097
+  
+</span>
+
+
                 
             </div>
           </div>
@@ -184,28 +190,88 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        
+        <p>Mechanism used to access a value of an <code>interface{}</code></p>
 
-<h3 id="resume">Resume</h3>
+<p></p>
 
-<p>I&rsquo;m a software developer since 2009, open source enthusiast, enjoy working with technology <code>unix like</code></p>
+<p>As is natural in <code>Go</code> we always use static types for function parameters or returns, we are in doubt in some
+contexts of how not to duplicate our code when we create a function to return a particular type and another function
+with the same structure returning another specific type, to take advantage of the same structure we can use <code>interface{}</code>
+and <code>Type assertions</code> mechanism that provides access to the value of the <code>interface{}</code>.</p>
 
-<h3 id="career">Career</h3>
+<pre><code class="language-go">var i interface{} = &quot;hello&quot;
+</code></pre>
 
-<p>See on my <a href="https://www.linkedin.com/in/luk4z7/">linkedin</a> page about my carrer</p>
+<p>Example of <code>Type Assertions</code> with a <code>i</code> variable, knowing that the value of the<code>i</code> variable is a <code>string</code>, we have
+the following <code>Assertion</code></p>
 
-<h3 id="community">Community</h3>
+<pre><code class="language-go">s := i.(string)
+fmt.Println(s) // hello
+</code></pre>
 
-<p>You can also find me in the <a href="http://linuxsay.com/users/luk4z_7">linux</a> and <a href="https://forum.golangbridge.org/users/luk4z7/activity">golang</a> communities or on my
-<a href="https://github.com/luk4z7">github</a> profile about my open source projects</p>
+<p>in this example we know exactly the type of value that the interface received, but when we try to do
+an assertion of a value that does not match the value of <code>i</code>?</p>
 
+<pre><code class="language-go">f = i.(float64)
+fmt.Println(f)
+</code></pre>
+
+<p>we received a <code>panic: interface conversion: interface {} is string, not float64</code> error, to deal with
+this error we must use a Boolean validation to identify if <code>assertion</code> was successful.</p>
+
+<pre><code class="language-go">if f, ok := i.(float64); ok {
+    fmt.Println(f)
+} else {
+    fmt.Println(&quot;not a float&quot;)
+}
+</code></pre>
+
+<p>to be more practical we can create a check with <code>Type switches</code>, with this verification we can
+condition more types and/or <code>structs</code></p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func check(i interface{}) {
+	switch v := i.(type) {
+	case int:
+		fmt.Printf(&quot;%v is int\n&quot;, v)
+	case string:
+		fmt.Printf(&quot;%s is string\n&quot;, v)
+	default:
+		fmt.Printf(&quot;I don't know about type %T!\n&quot;, v)
+	}
+}
+
+func main() {
+	check(21)
+	check(&quot;hello&quot;)
+	check(true)
+}
+</code></pre>
+
+<p>with that simple piece of code that can be very useful to us on the day by day to perform <code>Type assertions</code> and reuse
+our code with different types in <code>Go</code>.</p>
+
+<h5 id="referências">Referências</h5>
+
+<ul>
+<li><a href="https://tour.golang.org/methods/16">Type assertions</a></li>
+</ul>
       </article>
 
       <ul class="pager blog-pager">
         
+          <li class="previous">
+            <a href="http://beard.codes/post/2015-11-18-zf2-servicemanager/" data-toggle="tooltip" data-placement="top" title="ServiceManager">&larr; Previous Post</a>
+          </li>
+        
         
       </ul>
 
+      
+        
       
 
     </div>

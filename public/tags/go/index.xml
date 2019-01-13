@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on Beard.codes</title>
+    <link>http://beard.codes/tags/go/</link>
+    <description>Recent content in Go on Beard.codes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>luk4z_7@hotmail.com (Lucas Alves)</managingEditor>
+    <webMaster>luk4z_7@hotmail.com (Lucas Alves)</webMaster>
+    <lastBuildDate>Fri, 21 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://beard.codes/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Type assertions</title>
+      <link>http://beard.codes/post/2018-09-21-go-type-assertion/</link>
+      <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
+      <author>luk4z_7@hotmail.com (Lucas Alves)</author>
+      <guid>http://beard.codes/post/2018-09-21-go-type-assertion/</guid>
+      <description>&lt;p&gt;Mechanism used to access a value of an &lt;code&gt;interface{}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
